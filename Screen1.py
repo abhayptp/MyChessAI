@@ -47,30 +47,23 @@ class Screen():
             fromSquare=self.getInputFromSquare(board,colour)
             toSquare=self.getInputToSquare(board,colour,fromSquare)
             self.ChessBrd1.makeMove(board,(fromSquare,toSquare))
+            oppColour='B'
         else:
             print ("AI! It's your turn")
             move=self.AI.getMove(board,colour)
             oppColour='W'
-            #Checking for the check
-            if self.ChessRules.isKingInCheck(board,oppColour,move[0],move[1]):
-                oppColour=='W'
-                message="White"
-                self.checkMate=True
-                move1=()
-                for i in range(8):
-                    for j in range(8):
-                        if oppColour in board[i][j]:
-                            valid=self.ChessRules.getValidMoves(board,colour,(i,j))
-                            for move1 in valid:
-                                if not self.ChessRules.isKingInCheck(board,oppColour,(i,j),move1):
-                                    self.checkMate=False
-                                    #print(move1)
-                                    break
-                if self.checkMate==True:
-                    print(message+" CheckMate! You lost!")
-                else:
-                    print(message+" Your king is in check! Save it!")
             self.ChessBrd1.makeMove(board,move)
+        if self.ChessRules.isKingInCheck(board,oppColour):
+            if oppColour=='W':
+                message="White!"
+            else:
+                message="Black! AI!"
+            if self.ChessRules.isCheckMate(board,oppColour)==True:
+                print(message+" CheckMate! You lost!")
+                self.checkMate=True
+            else:
+                print(message+" Your king is in check! Save it! ")
+                
 
     def getInputFromSquare(self,board,colour):
         row=0
@@ -146,9 +139,6 @@ class Screen():
             flag=True
         elif toTuple not in validMoveTuple:
             print (" Invalid Move")
-        elif self.ChessRules.isKingInCheck(board,colour,fromTuple,toTuple):
-            flag=True
-            print("Invalid Input, King is in check")
         while flag or toTuple not in validMoveTuple:
             flag=False
             st=raw_input("Enter to square! ")
@@ -168,29 +158,7 @@ class Screen():
                 flag=True
             elif toTuple not in validMoveTuple:
                 print (" Invalid Move")
-            elif self.ChessRules.isKingInCheck(board,colour,fromTuple,toTuple):
-                print("Invalid Input, King is in check")
-                flag=True
-        if self.ChessRules.isKingInCheck(board,oppColour,fromTuple,toTuple):
-            if oppColour=='W':
-                message="White!"
-            else:
-                message="Black!"
-            self.checkMate=True
-            move=()
-            for i in range(8):
-                for j in range(8):
-                    if oppColour in board[i][j]:
-                        valid=self.ChessRules.getValidMoves(board,(i,j))
-                        for move in valid:
-                            if not self.ChessRules.isKingInCheck(board,oppColour,(i,j),move):
-                                self.checkMate=False
-                                #print(move)
-                                break
-            if self.checkMate==True:
-                print(message+" CheckMate! You lost!")
-            else:
-                print(message+" Your king is in check! Save it! ")
+        
 
         return (row,column)
 
@@ -203,15 +171,3 @@ class Screen():
             columnCh=chr(49+column)
             print("%c%c "%(rowCh,columnCh),end="")
         print()
-
-    def isGameOver(self,board):
-        count=0
-        for i in range(8):
-                for j in range(8):
-                        if 'a' in board[i][j]:
-                                count=count+1
-        if count==2:
-                return False
-        else:
-            print ("GAME OVER")
-            return True

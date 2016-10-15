@@ -12,7 +12,9 @@ class ChessBoard:
         
     def getBoard(self):
         return self.board
-    
+
+    def getForce(self,colour,board):
+        return [(i,j) for i in range(8) for j in range(8) if colour in board[i][j]]
     
     def getName(self,piece):
         s=""
@@ -33,22 +35,7 @@ class ChessBoard:
         elif 'a' in piece:               #a for King
             s=s+" King"
         return s
-	
-    def convertToMatrixNotation(self,moveTuple):
-        moveTuple1=()
-        columns=['A','B','C','D','E','F','G','H']
-        r1=moveTuple[0][0]+1
-        for i in range(8):
-            if columns[i]==moveTuple[0][1]:
-                c1=i+1
-                break;
-        r2=moveTuple[1][0]+1
-        for i in range(8):
-            if columns[i]==moveTuple[1][1]:
-                c2=i+1
-                break;
-        moveTuple1.append((r1,c1),(r2,c2))
-        return moveTuple1       
+	      
         
     def makeMove(self,board,moveTuple):
         #moveTuple1=covertToMatrixNotation(moveTuple)
@@ -80,3 +67,14 @@ class ChessBoard:
             board[fromRowPosition][fromColumnPosition]='0'
         
         
+'''ob=ChessBoard()
+board1=[['Wr','Wh','Wb','Wa','Wq','Wb','Wh','Wr'],
+            ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
+            ['0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0'],
+            ['0','0','0','0','0','0','0','0'],
+            ['Bp','Bp','Bp','Bp','Bp','Bp','Bp','Bp'],
+            ['Br','Bh','Bb','Ba','Bq','Bb','Bh','Br']]
+force=ob.getForce('B',board1)
+print (force)'''

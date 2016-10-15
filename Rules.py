@@ -9,84 +9,84 @@ class Rules:
                         return True
                 else:
                         return False
-
-        def isCheckMate(self,board,colour):
-                flag=1
-                for i in range(8):
-                        for j in range(8):
-                                if colour in board[i][j]:
-                                        validMoves=self.getValidMoves(board,(i,j))
-                                        #print(board[i][j])
-                                        for move in validMoves:
-                                                if not self.isKingInCheck(board,colour,(i,j),move):
-                                                        #print(board[i][j])
-                                                        #print("%d%d"%(i,j))
-                                                        #print(move)
-                                                        flag=0
-                                                        break
-                if flag==1:
+        def inside(self,x,y):
+                if x>=0 and x<8 and y>=0 and y<8:
                         return True
+                return False
+        def safe(self,i,j,board,color):
+		
+                for (d1,d2) in ((1,1),(-1,-1),(-1,1),(1,-1)):
+                        x=i
+                        y=j
+                        while True:
+                                x+=d1
+                                y+=d2
+                                if not self.inside(x,y):
+                                        break
+                                elif board[x][y]!='0':
+                                        if not color in board[x][y] and (board[x][y][1] in ('q','b')):
+                                                return False
+                                        break
+                for (d1,d2) in ((0,1),(1,0),(0,-1),(-1,0)):
+                        x=i
+                        y=j
+                        while True:
+                                x+=d1
+                                y+=d2
+                                if not self.inside(x,y):
+                                        break
+                                elif board[x][y]!='0':
+                                        if not color in board[x][y] and (board[x][y][1] in ('q','r')):
+                                                return False
+                                        break
+                
+                for (d1,d2) in ((2,1),(-2,-1),(2,-1),(-2,1),(1,2),(-1,-2),(-1,2),(1,-2)):
+                        if self.inside(i+d1,j+d2):	
+                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'h' in board[i+d1][j+d2]:
+                                        return False
+                if color=='B':
+                        c=1
                 else:
-                        return False
-        def isKingInCheck(self,board,colour,fromTuple,toTuple):
-                ch=board[toTuple[0]][toTuple[1]]
-                board[toTuple[0]][toTuple[1]]=board[fromTuple[0]][fromTuple[1]]
-                board[fromTuple[0]][fromTuple[1]]='0'
-                validMoveTuple=[]
+                        c=-1
+                for (d1,d2) in ((c,1),(c,-1)):
+                        if self.inside(i+d1,j+d2):	
+                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'p' in board[i+d1][j+d2]:
+                                        return False
+                for (d1,d2) in ((-1,-1),(1,-1),(-1,1),(1,1),(0,1),(1,0),(0,-1),(-1,0)):
+                        if self.inside(i+d1,j+d2):	
+                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'a' in board[i+d1][j+d2]:
+                                        return False
+                return True
+
+        def isKingInCheck(self,board,colour):
                 king=colour+'a'
-                if colour=='W':
-                        oppColour='B'
-                else:
-                        oppColour='W'
                 for i in range(8):
                         for j in range(8):
                                 if board[i][j]==king:
-                                        kingPos=(i,j)
-                for i in range(8):
-                        for j in range(8):
-                                if oppColour in board[i][j]:
-                                        validMoveTuple+=self.getValidMoves(board,(i,j))
-                                        #print(self.getValidMoves(board,(i,j)))
-                #print(validMoveTuple)
-                board[fromTuple[0]][fromTuple[1]]=board[toTuple[0]][toTuple[1]]
-                board[toTuple[0]][toTuple[1]]=ch
-                if kingPos in validMoveTuple:
-                        return True
-                else:
+                                        (x,y)=(i,j)
+                                        break
+                if self.safe(x,y,board,colour)==True:
                         return False
-
-        '''def getLegalMoves(self,board,fromTuple):
-                if 'B' in board[fromTuple[0]][fromTuple[1]]:
-                        colour='B'
                 else:
-                        colour='W'
-                legalMoves=[]
-                for i in range(8):
-                        for j in range(8):
-                                if self.isValid(board,colour,fromTuple,(i,j)):
-                                        legalMoves.append(i,j)
+                        return True
 
         def isCheckMate(self,board,colour):
                 moves=[]
-                if colour='B':
-                        oppColour='W'
-                else:
-                        oppColour='B'
                 for i in range(8):
                         for j in range(8):
-                                if oppColour in board[i][j]:
-                                        moves.extend(self.getLegalMoves(board,(i,j))
+                                if colour in board[i][j]:
+                                        moves.extend(self.getValidMoves(board,(i,j)))
                 if len(moves)==0:
-                                                     
                         return True
                 else:
                         return False
+                                                                  
         def isValid(self,board,colour,fromTuple,toTuple):
                 validMoves=self.getValidMoves(board,fromTuple)
                 if (toTuple in validMoves) and self.isKingInCheck(board,colour,fromTuple,toTuple):
                         return True
                 else:
-                        return False'''
+                        return False
         def isClear(self,board,fromTuple,ToTuple):
                 i1=fromTuple[0]
                 j1=fromTuple[1]
@@ -278,7 +278,24 @@ class Rules:
                                                         if i==fromRow+1 or i==fromRow-1:
                                                                 singleMove=(i,j)
                                                                 validMoveTuple.append(singleMove)
-                return validMoveTuple
+                validMoves=[]
+                king=colour+'a'
+                for i in range(8):
+                        for j in range(8):
+                                if king in board[i][j]:
+                                        (x,y)=(i,j)
+                                        break
+                for move in validMoveTuple:
+                        c=board[move[0]][move[1]]
+                        board[move[0]][move[1]]=ch
+                        board[fromRow][fromColumn]='0'
+                        if 'a' in ch:
+                                (x,y)=(move[0],move[1])
+                        if self.safe(x,y,board,colour):
+                                validMoves.append(move)
+                        board[move[0]][move[1]]=c
+                        board[fromRow][fromColumn]=ch
+                return validMoves
 
 '''board=[['Br','Bh','Bb','0','Bq','Bb','Bh','Br'],
        ['Bp','Bp','Bp','0','Bp','Bp','Bp','Bp'],
@@ -290,7 +307,7 @@ class Rules:
        ['Wr','Wh','Wb','Wa','0','Wb','Wh','Wr']]
 ob=Rules()
 valid=ob.getValidMoves(board,(4,1))
-#print(valid)
+print(valid)
 check=ob.isKingInCheck(board,'B',(3,4),(4,4))
 print(check)
 checkMate=ob.isCheckMate(board,'B')
