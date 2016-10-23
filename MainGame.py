@@ -28,3 +28,4 @@ class MainGame():
         self.DisplayScreen.play(board1)
 ob=MainGame()
 ob.Game()
+

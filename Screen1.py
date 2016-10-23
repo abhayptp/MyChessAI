@@ -1,4 +1,5 @@
 from __future__ import print_function
+from minmax import minmax
 from ChessAI import ChessAI
 from Rules import Rules
 from ChessBoard import ChessBoard
@@ -8,6 +9,7 @@ class Screen():
     def __init__(self):
         self.ChessRules=Rules()
         self.ChessBrd1=ChessBoard()
+        self.AI2=minmax()
         self.checkMate=False
         self.AI=ChessAI()
 
@@ -50,7 +52,8 @@ class Screen():
             oppColour='B'
         else:
             print ("AI! It's your turn")
-            move=self.AI.getMove(board,colour)
+            value=self.AI2.alphabeta(board,colour,3,-999999,999999)
+            move=value[1]
             oppColour='W'
             self.ChessBrd1.makeMove(board,move)
         if self.ChessRules.isKingInCheck(board,oppColour):

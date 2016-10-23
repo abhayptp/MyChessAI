@@ -26,7 +26,7 @@ class ChessBoard:
             s=s+" Rook"
         elif 'b' in piece:
             s=s+" Bishop"
-        elif 'k' in piece:
+        elif 'h' in piece:
             s=s+" Knight"
         elif 'p' in piece:
             s=s+" Pawn"
