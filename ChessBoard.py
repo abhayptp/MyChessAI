@@ -1,14 +1,14 @@
 from __future__ import print_function
 class ChessBoard:
-    def __init__(self):
-        self.board=[['Wr','Wh','Wb','Wa','Wq','Wb','Wh','Wr'],
-                    ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
-                    ['0','0','0','0','0','0','0','0'],
-                    ['0','0','0','0','0','0','0','0'],
-                    ['0','0','0','0','0','0','0','0'],
-                    ['0','0','0','0','0','0','0','0'],
-                    ['Bp','Bp','Bp','Bp','Bp','Bp','Bp','Bp'],
-                    ['Br','Bh','Bb','Ba','Bq','Bb','Bh','Br']]
+    def __init__(self,setupType=0):
+        self.board=[['Br','Bh','Bb','Ba','Bq','Bb','Bh','Br'],
+                ['Bp','Bp','Bp','Bp','Bp','Bp','Bp','Bp'],
+                ['0','0','0','0','0','0','0','0'],
+                ['0','0','0','0','0','0','0','0'],
+                ['0','0','0','0','0','0','0','0'],
+                ['0','0','0','0','0','0','0','0'],
+                ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
+                ['Wr','Wh','Wb','Wa','Wq','Wb','Wh','Wr']]
         
     def getBoard(self):
         return self.board
@@ -36,7 +36,16 @@ class ChessBoard:
             s=s+" King"
         return s
 	      
-        
+    def convertToAlgebraicNotation_col(self,col):
+        A = ['a','b','c','d','e','f','g','h']
+        return A[col]
+
+    def convertToAlgebraicNotation_row(self,row):
+        #(row,col) format used in Python Chess code starts at (0,0) in the upper left.
+        #Algebraic notation starts in the lower left and uses "a..h" for the column.	
+        B = ['8','7','6','5','4','3','2','1']
+        return B[row]
+    
     def makeMove(self,board,moveTuple):
         #moveTuple1=covertToMatrixNotation(moveTuple)
         toRowPosition=moveTuple[1][0]
