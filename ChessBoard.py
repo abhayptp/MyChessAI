@@ -37,7 +37,7 @@ class ChessBoard:
         return s
 	      
     def convertToAlgebraicNotation_col(self,col):
-        A = ['a','b','c','d','e','f','g','h']
+        A = ['A','B','C','D','E','F','G','H']
         return A[col]
 
     def convertToAlgebraicNotation_row(self,row):
