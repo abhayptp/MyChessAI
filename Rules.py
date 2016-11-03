@@ -173,111 +173,112 @@ class Rules:
                 colour=ch[0]
                 validMoveTuple=[]
                 SingleMove=()
+                
                 if 'p' in ch:      #For pawn
                         if 'B' in ch:
                                 if fromRow==1 and self.isClear(board,fromMoveTuple,(3,fromColumn))==True and board[3][fromColumn]=='0':
-                                        singleMove=(3,fromColumn)
-                                        validMoveTuple.append(singleMove)
+                                        validMoveTuple.append((3,fromColumn))
                                 if fromColumn!=0 and fromRow!=7 and 'W' in board[fromRow+1][fromColumn-1]:
-                                    singleMove=(fromRow+1,fromColumn-1)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow+1,fromColumn-1))
                                 if fromColumn!=7 and fromRow!=7 and 'W' in board[fromRow+1][fromColumn+1]:
-                                    singleMove=(fromRow+1,fromColumn+1)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow+1,fromColumn+1))
                                 if board[fromRow+1][fromColumn]=='0':
-                                    singleMove=(fromRow+1,fromColumn)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow+1,fromColumn))
                         if 'W' in ch:
                                 if fromRow==6 and self.isClear(board,fromMoveTuple,(4,fromColumn))==True and board[4][fromColumn]=='0':
-                                        singleMove=(4,fromColumn)
-                                        validMoveTuple.append(singleMove)
+                                        validMoveTuple.append((4,fromColumn))
                                 if fromColumn!=0 and fromRow!=0 and 'B' in board[fromRow-1][fromColumn-1]:
-                                    singleMove=(fromRow-1,fromColumn-1)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow-1,fromColumn-1))
                                 if fromColumn!=7 and fromRow!=0 and 'B' in board[fromRow-1][fromColumn+1]:
-                                    singleMove=(fromRow-1,fromColumn+1)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow-1,fromColumn+1))
                                 if board[fromRow-1][fromColumn]=='0':
-                                    singleMove=(fromRow-1,fromColumn)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow-1,fromColumn))
+                                    
                 if 'r' in ch:   #For Rook
                         for i in range(8):
                                 if i==fromRow:
-                                    pass
+                                    continue
                                 elif self.isMyPiece(board,i,fromColumn,colour)==False and self.isClear(board,fromMoveTuple,(i,fromColumn))==True:
-                                    singleMove=(i,fromColumn)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((i,fromColumn))
                         for j in range(8):
                                 if j==fromColumn:
-                                    pass
+                                    continue
                                 elif self.isMyPiece(board,fromRow,j,colour)==False and self.isClear(board,fromMoveTuple,(fromRow,j))==True:
-                                    singleMove=(fromRow,j)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((fromRow,j))
+                                                                
                 if 'b' in ch:    #For bishop
-                        for i in range(8):
-                                for j in range(8):
-                                        if abs(i-fromRow)==abs(j-fromColumn) and self.isMyPiece(board,i,j,colour)==False and self.isClear(board,fromMoveTuple,(i,j))==True:
-                                                if i==fromRow and j==fromColumn:
+                        for r in [+1,-1]:
+                                for c in [+1,-1]:
+                                        i=fromRow
+                                        j=fromColumn
+                                        while i>=0 and i<8 and j>=0 and j<8:
+                                                if i==fromRow or j==fromColumn:
+                                                        i=i+r
+                                                        j=j+c
                                                         continue
+                                                if self.isMyPiece(board,i,j,colour)==True:
+                                                        break;
                                                 else:
-                                                        singleMove=(i,j)
-                                                        validMoveTuple.append(singleMove)
+                                                        if board[i][j]!='0':
+                                                                validMoveTuple.append((i,j))
+                                                                break
+                                                validMoveTuple.append((i,j))
+                                                i=i+r
+                                                j=j+c
+                                                
                 if 'a' in ch:    #For king
-                        for i in range(8):
-                                for j in range(8):
-                                        if self.isMyPiece(board,i,j,colour)==False:
-                                                if i==fromRow:
-                                                        if j==fromColumn+1 or j==fromColumn-1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
-                                                if j==fromColumn:
-                                                        if i==fromRow+1 or i==fromRow-1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
-                                                if i==fromRow+1:
-                                                        if j==fromColumn-1 or j==fromColumn+1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
-                                                if i==fromRow-1:
-                                                        if j==fromColumn+1 or j==fromColumn-1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
+                        for i in [fromRow+1,fromRow-1,fromRow]:
+                                if i>=0 and i<8:
+                                        for j in [fromColumn+1,fromColumn-1,fromColumn]:
+                                                if j>=0 and j<8:
+                                                        if self.isMyPiece(board,i,j,colour)==False:
+                                                                validMoveTuple.append((i,j))
 
                 if 'q' in ch:         #For Queen
                         for i in range(8):
                                 if i==fromRow:
                                     continue
                                 elif self.isMyPiece(board,i,fromColumn,colour)==False and self.isClear(board,fromMoveTuple,(i,fromColumn))==True:
-                                    singleMove=(i,fromColumn)
-                                    validMoveTuple.append(singleMove)
+                                    validMoveTuple.append((i,fromColumn))
                         for j in range(8):
                                 if j==fromColumn:
                                     continue
                                 elif self.isMyPiece(board,fromRow,j,colour)==False and self.isClear(board,fromMoveTuple,(fromRow,j))==True:
-                                    singleMove=(fromRow,j)
-                                    validMoveTuple.append(singleMove)
-                        for i in range(8):
-                                for j in range(8):
-                                        if abs(i-fromRow)==abs(j-fromColumn) and self.isMyPiece(board,i,j,colour)==False and self.isClear(board,fromMoveTuple,(i,j))==True:
-                                                if i==fromRow and j==fromColumn:
-                                                        pass
+                                    validMoveTuple.append((fromRow,j))
+                        for r in [+1,-1]:
+                                for c in [+1,-1]:
+                                        i=fromRow
+                                        j=fromColumn
+                                        while i>=0 and i<8 and j>=0 and j<8:
+                                                if i==fromRow or j==fromColumn:
+                                                        i=i+r
+                                                        j=j+c
+                                                        continue
+                                                if self.isMyPiece(board,i,j,colour)==True:
+                                                        break;
                                                 else:
-                                                        singleMove=(i,j)
-                                                        validMoveTuple.append(singleMove)
+                                                        if board[i][j]!='0':
+                                                                validMoveTuple.append((i,j))
+                                                                break
+                                                validMoveTuple.append((i,j))
+                                                i=i+r
+                                                j=j+c
 
 
                 if 'h' in ch:             #For KNIGHT
-                        for i in range(8):
-                                for j in range(8):
-                                        if self.isMyPiece(board,i,j,colour)==False:
-                                                if i==fromRow+2 or i==fromRow-2:
-                                                        if j==fromColumn-1 or j==fromColumn+1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
-                                                if j==fromColumn+2 or j==fromColumn-2:
-                                                        if i==fromRow+1 or i==fromRow-1:
-                                                                singleMove=(i,j)
-                                                                validMoveTuple.append(singleMove)
+                        for i in [fromRow+2,fromRow-2]:
+                                if i>=0 and i<8:
+                                        for j in [fromColumn+1,fromColumn-1]:
+                                                if j>=0 and j<8:
+                                                        if self.isMyPiece(board,i,j,colour)==False:
+                                                                validMoveTuple.append((i,j))
+                        for i in [fromRow-1,fromRow+1]:
+                                if i>=0 and i<8:
+                                        for j in [fromColumn-2,fromColumn+2]:
+                                                if j>=0 and j<8:
+                                                        if self.isMyPiece(board,i,j,colour)==False:
+                                                                validMoveTuple.append((i,j))
+                                                        
                 validMoves=[]
                 king=colour+'a'
                 for i in range(8):
@@ -296,20 +297,16 @@ class Rules:
                         board[move[0]][move[1]]=c
                         board[fromRow][fromColumn]=ch
                 return validMoves
-
-'''board=[['Br','Bh','Bb','0','Bq','Bb','Bh','Br'],
+'''
+board=[['Br','Bh','Bb','0','Bq','Bb','Bh','Br'],
        ['Bp','Bp','Bp','0','Bp','Bp','Bp','Bp'],
        ['0','0','Wr','0','0','0','0','0'],
-       ['0','0','Wr','0','Ba','0','0','0'],
+       ['0','0','0','0','Ba','0','0','0'],
        ['0','Wq','0','0','0','0','0','0'],
        ['0','0','0','0','0','0','0','0'],
        ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
        ['Wr','Wh','Wb','Wa','0','Wb','Wh','Wr']]
 ob=Rules()
-valid=ob.getValidMoves(board,(4,1))
+valid=ob.getValidMoves(board,(7,6))
 print(valid)
-check=ob.isKingInCheck(board,'B',(3,4),(4,4))
-print(check)
-checkMate=ob.isCheckMate(board,'B')
-print(checkMate)
 '''
