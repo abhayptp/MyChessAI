@@ -292,7 +292,7 @@ class Rules:
                         board[fromRow][fromColumn]='0'
                         if 'a' in ch:
                                 (x,y)=(move[0],move[1])
-                        if self.safe(x,y,board,colour):
+                        if 'a' not in c and self.safe(x,y,board,colour):
                                 validMoves.append(move)
                         board[move[0]][move[1]]=c
                         board[fromRow][fromColumn]=ch
