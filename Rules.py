@@ -50,7 +50,7 @@ class Rules:
                         c=-1
                 for (d1,d2) in ((c,1),(c,-1)):
                         if self.inside(i+d1,j+d2):	
-                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'p' in board[i+d1][j+d2]:
+                                if not color in board[i+d1][j+d2] and 'p' in board[i+d1][j+d2]:
                                         return False
                 for (d1,d2) in ((-1,-1),(1,-1),(-1,1),(1,1),(0,1),(1,0),(0,-1),(-1,0)):
                         if self.inside(i+d1,j+d2):	
