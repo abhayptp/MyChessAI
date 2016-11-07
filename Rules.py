@@ -42,7 +42,7 @@ class Rules:
                 
                 for (d1,d2) in ((2,1),(-2,-1),(2,-1),(-2,1),(1,2),(-1,-2),(-1,2),(1,-2)):
                         if self.inside(i+d1,j+d2):	
-                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'h' in board[i+d1][j+d2]:
+                                if not color in board[i+d1][j+d2] and 'h' in board[i+d1][j+d2]:
                                         return False
                 if color=='B':
                         c=1
@@ -54,7 +54,7 @@ class Rules:
                                         return False
                 for (d1,d2) in ((-1,-1),(1,-1),(-1,1),(1,1),(0,1),(1,0),(0,-1),(-1,0)):
                         if self.inside(i+d1,j+d2):	
-                                if board[x][y]!='0' and not color in board[i+d1][j+d2] and 'a' in board[i+d1][j+d2]:
+                                if not color in board[i+d1][j+d2] and 'a' in board[i+d1][j+d2]:
                                         return False
                 return True
 
