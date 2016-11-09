@@ -20,41 +20,32 @@ class Evaluation:
                 self.bk=pos
         for pos in wForce:
             if board[pos[0]][pos[1]]=='Wp':
-                wValue = wValue + 100
-                wValue = wValue + self.getPValue(board,pos)
+                wValue = wValue + 205 + self.getPValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wr':
-                wValue = wValue + 500
-                wValue = wValue + self.getRookValue(board,pos)
+                wValue = wValue + 514 + self.getRookValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wb':
-                wValue = wValue + 400
-                wValue = wValue + self.getBishopValue(board,pos)
+                wValue = wValue + 442 + self.getBishopValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wh':
-                wValue = wValue + 300
-                wValue = wValue + self.getKnightValue(board,pos)
+                wValue = wValue + 384 + self.getKnightValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wq':
-                wValue = wValue + 1000
-                wValue = wValue + self.getKingValue(board,pos)
+                wValue = wValue + 1000 
             else:
-                pass
+                wValue = wValue + self.getKingValue(board,pos)
                 
         for pos in bForce:
             if board[pos[0]][pos[1]]=='Bp':
-                bValue = wValue + 100
-                wValue = bValue + self.getPValue(board,pos)
+                bValue = bValue + 205 + self.getPValue(board,pos)
             elif board[pos[0]][pos[1]]=='Br':
-                bValue = wValue + 500
-                bValue = bValue + self.getRookValue(board,pos)
+                bValue = bValue + 514 + self.getRookValue(board,pos)
             elif board[pos[0]][pos[1]]=='Bb':
-                bValue = wValue + 400
-                bValue = bValue + self.getBishopValue(board,pos)
+                bValue = bValue + 442 + self.getBishopValue(board,pos)
             elif board[pos[0]][pos[1]]=='Bh':
-                bValue = wValue + 300
-                bValue = bValue + self.getKnightValue(board,pos)
+                bValue = bValue + 384 + self.getKnightValue(board,pos)
             elif board[pos[0]][pos[1]]=='Bq':
-                bValue = wValue + 1000
-                bValue = bValue + self.getKingValue(board,pos)
+                bValue = bValue + 1000
             else:
-                pass
+                 bValue = bValue + self.getKingValue(board,pos)
+
         value=wValue-bValue
         return value
 
@@ -62,40 +53,40 @@ class Evaluation:
         pawnValue = 0
         if 'W' in board[r][c]:
             if r==6:
-                if board[r-1][c]=='0':
-                    pawnValue = pawnValue + 500
+                if board[r+1][c]=='0':
+                    pawnValue = pawnValue + 595
                 else:
-                    pawnValue = pawnValue + 300
+                    pawnValue = pawnValue + 54
             elif r==5 :
 		if board[r-1][c]=='0' and board[r-2][c]=='0' :
-		    pawnValue = pawnValue + 200
+		    pawnValue = pawnValue + 213
 		else :
-		    pawnValue = pawnValue + 100
+		    pawnValue = pawnValue + 117
 	    elif r==4 :
-		pawnValue = pawnValue + 50
+		pawnValue = pawnValue + 53
 	    else :
                 pass
-            if r!=7:
+            if r!=7 and r>0:
                 if board[r-1][c]!='0':
-                    pawnValue = pawnValue - 50
+                    pawnValue = pawnValue - 51
         if 'B' in board[r][c]:
             if r==1:
-                if board[r+1][c]=='0':
-                    pawnValue = pawnValue + 500
+                if board[r-1][c]=='0':
+                    pawnValue = pawnValue + 595
                 else:
-                    pawnValue = pawnValue + 300
+                    pawnValue = pawnValue + 54
             elif r==2 :
 		if board[r+1][c]=='0' and board[r+2][c]=='0' :
-		    pawnValue = pawnValue + 200
+		    pawnValue = pawnValue + 213
 		else :
-		    pawnValue = pawnValue + 100
+		    pawnValue = pawnValue + 117
 	    elif r==3 :
-		pawnValue = pawnValue + 50
+		pawnValue = pawnValue + 53
 	    else :
                 pass
-            if r!=0:
+            if r!=0 and r<7:
                 if board[r+1][c]!='0':
-                    pawnValue = pawnValue - 50
+                    pawnValue = pawnValue - 51
 
         return pawnValue
     def getRookValue(self,board,(r,c)):
@@ -104,10 +95,10 @@ class Evaluation:
                 rookValue = rookValue + 100
         if 'W' in board[r][c]:
 		if abs(self.wk[0] - r) <= 1 or abs(self.wk[1] - c) <= 1 :
-			rookValue = rookValue + 50
+			rookValue = rookValue + 57
 	if 'B' in board[r][c]:
 		if abs(self.bk[0] - r) <= 1 or abs(self.bk[1] - c) <= 1 :
-			rookValue = rookValue + 50
+			rookValue = rookValue + 57
 	return rookValue
 
     def getKnightValue(self,board,(r,c)):
@@ -115,17 +106,17 @@ class Evaluation:
         if 'W' in board[r][c]:
             distance = abs(r - self.bk[0]) + abs(c - self.bk[1])
             if distance <= 2 :
-                knightValue = knightValue + 100
+                knightValue = knightValue + 98
             elif distance <= 4 :
-                knightValue = knightValue + 50
+                knightValue = knightValue + 47
             else :
                 pass
-        elif 'B' in board[r][c]:
+        if 'B' in board[r][c]:
             distance = abs(r - self.wk[0]) + abs(c - self.wk[1])
             if distance <= 2 :
-                knightValue = knightValue + 100
+                knightValue = knightValue + 98
             elif distance <= 4 :
-                knightValue = knightValue + 50
+                knightValue = knightValue + 48
             else :
                 pass
         return knightValue
@@ -135,17 +126,17 @@ class Evaluation:
         if 'W' in board[r][c]:
             distance = abs(r - self.bk[0]) + abs(c - self.bk[1])
             if distance <= 2 :
-                    bishopValue = bishopValue+ 100
+                    bishopValue = bishopValue+ 121
             elif distance <= 4 :
-                    bishopValue = bishopValue + 50
+                    bishopValue = bishopValue + 48
             else :
                 pass
         if 'B' in board[r][c]:
             distance = abs(r-self.wk[0]) + abs(c-self.wk[1])
             if distance <=2 :
-                bishopValue = bishopValue + 100
+                bishopValue = bishopValue + 121
             elif distance<=4 :
-                bishopValue = bishopValue + 50
+                bishopValue = bishopValue + 48
             else:
                 pass
         return bishopValue
@@ -157,28 +148,28 @@ class Evaluation:
 	if ch in board[r][c] :
 		if self.cr.inside(r,c-1) :
 			if ch in board[r][c-1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 16
 		if self.cr.inside(r-1,c-1) :
 			if ch in board[r-1][c-1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 13
 		if self.cr.inside(r+1,c) :
 			if ch in board[r+1][c] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 14
 		if self.cr.inside(r+1,c+1) :
 			if ch in board[r+1][c+1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 17
 		if self.cr.inside(r,c+1) :
 			if ch in board[r][c+1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 11
 		if self.cr.inside(r-1,c+1) :
 			if ch in board[r-1][c+1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 18
 		if self.cr.inside(r-1,c) :
 			if ch in board[r-1][c] :
 				kingValue = kingValue + 20
 		if self.cr.inside(r-1,c-1) :
 			if ch in board[r-1][c-1] :
-				kingValue = kingValue + 20
+				kingValue = kingValue + 12
 	
         return kingValue 
 

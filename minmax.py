@@ -7,7 +7,13 @@ class minmax:
         self.cr=Rules()
         self.cb=ChessBoard()
         self.ev=Evaluation()
-
+        self.count=0;
+        
+    def getMove(self,board,colour):
+        d=self.alphabeta(board,'B',3,-999999,999999)
+        moveTuple=d[1]
+        return moveTuple
+    
     def makeCopy(self,board):
         return [[board[j][i] for i in range(8)] for j in range(8)]
 
@@ -26,8 +32,10 @@ class minmax:
         return m
 
     def alphabeta(self,position, to_move, depth, alpha, beta):
+        
         if depth == 0 or self.cr.isCheckMate(position,'W') or self.cr.isCheckMate(position,'B'):
             q=self.ev.evaluate(position)
+            self.count=self.count+1;
             return (q, None)
         else: 
             if to_move == 'W':

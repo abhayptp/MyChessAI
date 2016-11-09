@@ -1,16 +1,20 @@
-import pygame,sys
+import pygame,sys #Importing the pygame package
 import os
 from pygame.locals import *
-from Rules import Rules
 from ChessBoard import ChessBoard
+from Rules import Rules
 class GUI:
     def __init__(self):
-        pygame.init()
+        #Initializing all the pygame modules
+        pygame.init() 
         pygame.display.init()
-        self.screen=pygame.display.set_mode((500,500))
-        pygame.display.set_caption("My Chess")
+        #Making an object for screen of size 500*500
+        self.screen=pygame.display.set_mode((500,500)) 
+        #Setting the name for the window
+        pygame.display.set_caption("My Chess") 
         self.boardStart_x = 50
         self.boardStart_y = 50
+        #For loading the images of all the chess pieces
         self.loadImages()
         self.fontDefault = pygame.font.Font( None, 20 )
         self.Rules=Rules()
@@ -18,10 +22,13 @@ class GUI:
 
     def loadImages(self):
         self.square_size = 50
+        #All image are of 50*50 pixels
+        #convert() is supposed tohelp the pygame display images faster
         self.white_square = pygame.image.load(os.path.join("images","white_square.png")).convert()
         self.brown_square = pygame.image.load(os.path.join("images","Brown.png")).convert()
         self.cyan_square = pygame.image.load(os.path.join("images","cyan_square.png")).convert()
         self.black_pawn = pygame.image.load(os.path.join("images","BlackPawn.png")).convert()
+        #Scaling the images of pieces to 50*50 size
         self.black_pawn = pygame.transform.scale(self.black_pawn, (self.square_size,self.square_size))
         self.black_rook = pygame.image.load(os.path.join("images","BlackRook.png")).convert()
         self.black_rook = pygame.transform.scale(self.black_rook, (self.square_size,self.square_size))
@@ -74,10 +81,9 @@ class GUI:
                     current_square = (current_square+1)%2
 
             current_square = (current_square+1)%2
-        chessboard_obj = ChessBoard(0)
         color = (255,255,255)
         antialias = 1
-        
+        #For drawing the row and column numbers on the side
         for c in range(boardSize):
             for r in [-1,boardSize]:
                 (screenX,screenY) = self.convertToScreen((r,c))
@@ -93,13 +99,14 @@ class GUI:
                 screenX = screenX + self.square_size/2
                 screenY = screenY + self.square_size/2
                 notation = self.cb.convertToAlgebraicNotation_row(r)
-                renderedLine = self.fontDefault.render(notation,antialias,color)
+                renderedLine = self.fontDefault.render(notation,0,color)
                 self.screen.blit(renderedLine,(screenX,screenY))
-                        
+        #For highlighting the squares, if needed                
         for square in highlightSquares:
             (screenX,screenY) = self.convertToScreen(square)
             self.screen.blit(self.cyan_square,(screenX,screenY))
-        
+
+        #Drawing the pices on the board
         for r in range(boardSize):
             for c in range(boardSize):
                 (screenX,screenY) = self.convertToScreen((r,c))
@@ -130,20 +137,8 @@ class GUI:
                 
         pygame.display.flip()
 
-    def endGame(self,board):
-        self.Draw(board) 
-        pygame.event.set_blocked(MOUSEMOTION)
-        while True:
-            e = pygame.event.wait()
-            if e.type is KEYDOWN:
-                    pygame.quit()
-                    sys.exit(0)
-            if e.type is QUIT:
-                    pygame.quit()
-                    sys.exit(0)
-
                     
-    def getPlayerInput(self,board,currentColor):
+    def getMove(self,board,currentColor):
         fromSquareChosen = False
         toSquareChosen = False
         while not fromSquareChosen or not toSquareChosen:
@@ -208,7 +203,7 @@ class GUI:
         return (fromTuple,toTuple)
 
     def endGame(self,board):
-        self.Draw(board) 
+        self.draw(board) 
         pygame.event.set_blocked(MOUSEMOTION)
         while True:
             e = pygame.event.wait()
