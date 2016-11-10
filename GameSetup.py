@@ -1,5 +1,5 @@
+#Importing all Tkinter modules
 from Tkinter import *
-#from Tkinter import Tk,Frame,Label,Entry,Radiobutton,Button,StringVar,ANCHOR
 
 class GameSetup:
 
@@ -9,9 +9,9 @@ class GameSetup:
 		self.frame = Frame(self.root)
 		self.frame.pack()
 		
-		self.instructionMessage = StringVar()
-		Label(self.frame, textvariable=self.instructionMessage).grid(row=0)
-		self.instructionMessage.set("Please enter game options.")
+		self.Message = StringVar()
+		Label(self.frame, textvariable=self.Message).grid(row=0)
+		self.Message.set("Please enter game options.")
 
 		Label(self.frame, text="Name").grid(row=1,column=1)
 		Label(self.frame, text="Type").grid(row=1,column=2)
@@ -56,7 +56,7 @@ class GameSetup:
 			if self.player1Name == "":
 				self.entry_player1Name.insert(ANCHOR,"Kasparov")
 			if self.player2Name == "":
-				self.entry_player2Name.insert(ANCHOR,"Light Blue")
+				self.entry_player2Name.insert(ANCHOR,"Abhay")
 
 	def getGameInfo(self):
 		self.root.wait_window(self.frame) #waits for frame to be destroyed

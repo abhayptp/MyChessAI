@@ -52,7 +52,7 @@ class Screen():
             oppColour='B'
         else:
             print ("AI! It's your turn")
-            value=self.AI2.alphabeta(board,colour,5,-999999,999999)
+            value=self.AI2.alphabeta(board,colour,3,-999999,999999)
             move=value[1]
             oppColour='W'
             self.ChessBrd1.makeMove(board,move)

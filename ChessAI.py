@@ -12,7 +12,7 @@ class ChessAI:
         return moveTuple
             
     def getMyPiecesWithValidMoves(self,board,color):
-        myColor = 'B'
+        myColor = color
         enemyColor = 'W'
         myPieces = []
         for row in range(8):

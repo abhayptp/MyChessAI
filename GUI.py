@@ -99,7 +99,7 @@ class GUI:
                 screenX = screenX + self.square_size/2
                 screenY = screenY + self.square_size/2
                 notation = self.cb.convertToAlgebraicNotation_row(r)
-                renderedLine = self.fontDefault.render(notation,0,color)
+                renderedLine = self.fontDefault.render(notation,antialias,color)
                 self.screen.blit(renderedLine,(screenX,screenY))
         #For highlighting the squares, if needed                
         for square in highlightSquares:
@@ -139,6 +139,7 @@ class GUI:
 
                     
     def getMove(self,board,currentColor):
+        #To get the move from the user
         fromSquareChosen = False
         toSquareChosen = False
         while not fromSquareChosen or not toSquareChosen:
@@ -202,6 +203,7 @@ class GUI:
 
         return (fromTuple,toTuple)
 
+    #Prints end game status
     def endGame(self,board):
         self.draw(board) 
         pygame.event.set_blocked(MOUSEMOTION)

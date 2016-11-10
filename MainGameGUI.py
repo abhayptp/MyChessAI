@@ -14,8 +14,6 @@ class MainGameGUI:
         self.cb=ChessBoard()
         self.cr=Rules()
         self.gui=GUI()
-        self.ai=minmax()
-        self.ai2=ChessAI()
         #To check which player has to move
         self.player=['W','B']
         self.moves=0
@@ -72,12 +70,6 @@ class MainGameGUI:
                     self.pieces=self.pieces+1
         print("Pieces= %d"%self.pieces)
         self.gui.draw(board)
-        winnerIndex = (currentPlayerIndex+1)%2
-        currentColor=self.player[winnerIndex]
-        if currentColor == 'W':
-            name="White"
-        else:
-            name="Black"
         #Ends the game
         self.gui.endGame(board)
 board=  [['Br','Bh','Bb','Bq','Ba','Bb','Bh','Br'],

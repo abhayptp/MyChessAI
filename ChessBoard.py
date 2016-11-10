@@ -1,14 +1,27 @@
 from __future__ import print_function
 class ChessBoard:
     def __init__(self,setupType=0):
-        self.board=[['Br','Bh','Bb','Ba','Bq','Bb','Bh','Br'],
-                ['Bp','Bp','Bp','Bp','Bp','Bp','Bp','Bp'],
-                ['0','0','0','0','0','0','0','0'],
-                ['0','0','0','0','0','0','0','0'],
-                ['0','0','0','0','0','0','0','0'],
-                ['0','0','0','0','0','0','0','0'],
-                ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
-                ['Wr','Wh','Wb','Wa','Wq','Wb','Wh','Wr']]
+        self.board=[['Br','Bh','Bb','Bq','Ba','Bb','Bh','Br'],
+                    ['Bp','Bp','Bp','Bp','Bp','Bp','Bp','Bp'],
+                    ['0','0','0','0','0','0','0','0'],
+                    ['0','0','0','0','0','0','0','0'],
+                    ['0','0','0','0','0','0','0','0'],
+                    ['0','0','0','0','0','0','0','0'],
+                    ['Wp','Wp','Wp','Wp','Wp','Wp','Wp','Wp'],
+                    ['Wr','Wh','Wb','Wq','Wa','Wb','Wh','Wr']]
+        self.wq=(7,3)
+        self.bq=(0,3)
+        self.wp=[(7,i) for i in range(7)]
+        self.bp=[(0,i) for i in range(7)]
+        self.br=[(0,0),(0,7)]
+        self.wr=[(7,0),(7,7)]
+        self.wa=(7,4)
+        self.ba=(0,4)
+        self.bh=[(0,1),(0,6)]
+        self.wh=[(7,1),[7,6]]
+        self.bb=[(0,2),(0,5)]
+        self.wb=[(7,2),(7,5)]
+        
         
     def getBoard(self):
         return self.board
@@ -54,21 +67,21 @@ class ChessBoard:
         fromColumnPosition=moveTuple[0][1]
         pp=""
         if board[fromRowPosition][fromColumnPosition]=='Bp' and toRowPosition==7 :  #For Promotion
-            pp=raw_input("Enter the piece you want to promote your pawn to: ")
-            while len(pp)!=2 and pp[0]=='B' and (pp[1]=='r' or pp[1]=='h' or pp[1]=='b' or pp[1]=='p' or pp[1]=='a' or pp[1]=='q'):
-                print("Invalid Input")
-                pp=raw_input("Enter the piece you want to promote your pawn to: ")
-            board[toRowPosition][toColumnPosition]=pp
+            #pp=raw_input("Enter the piece you want to promote your pawn to: ")
+            #while len(pp)!=2 and pp[0]=='B' and (pp[1]=='r' or pp[1]=='h' or pp[1]=='b' or pp[1]=='p' or pp[1]=='a' or pp[1]=='q'):
+            #    print("Invalid Input")
+            #    pp=raw_input("Enter the piece you want to promote your pawn to: ")
+            board[toRowPosition][toColumnPosition]='Bq'
             board[fromRowPosition][fromColumnPosition]='0'
         elif board[fromRowPosition][fromColumnPosition]=='Wp' and toRowPosition==0 :  #For Promotion
-            pp=raw_input("Enter the piece you want to promote your pawn to: ")
-            while len(pp)!=2 and pp[0]=='W' and (pp[1]=='r' or pp[1]=='h' or pp[1]=='b' or pp[1]=='p' or pp[1]=='a' or pp[1]=='q'):
-                print("Invalid Input")
-                pp=raw_input("Enter the piece you want to promote your pawn to: ")
-            board[toRowPosition][toColumnPosition]=pp
+            #pp=raw_input("Enter the piece you want to promote your pawn to: ")
+            #while len(pp)!=2 and pp[0]=='W' and (pp[1]=='r' or pp[1]=='h' or pp[1]=='b' or pp[1]=='p' or pp[1]=='a' or pp[1]=='q'):
+            #    print("Invalid Input")
+            #    pp=raw_input("Enter the piece you want to promote your pawn to: ")
+            board[toRowPosition][toColumnPosition]='Wq'
             board[fromRowPosition][fromColumnPosition]='0'
         elif board[toRowPosition][toColumnPosition]!='0':
-            print (self.getName(board[toRowPosition][toColumnPosition])+" is killed")
+            #print (self.getName(board[toRowPosition][toColumnPosition])+" is killed")
             board[toRowPosition][toColumnPosition]=board[fromRowPosition][fromColumnPosition]
             board[fromRowPosition][fromColumnPosition]='0'
         else:

@@ -205,7 +205,7 @@ class Rules:
                                     validMoveTuple.append((fromRow+1,fromColumn-1))
                                 if fromColumn!=7 and fromRow!=7 and 'W' in board[fromRow+1][fromColumn+1]:
                                     validMoveTuple.append((fromRow+1,fromColumn+1))
-                                if board[fromRow+1][fromColumn]=='0':
+                                if fromRow!=7 and board[fromRow+1][fromColumn]=='0':
                                     validMoveTuple.append((fromRow+1,fromColumn))
                         if 'W' in ch:
                                 if fromRow==6 and self.isClear(board,fromMoveTuple,(4,fromColumn))==True and board[4][fromColumn]=='0':
@@ -214,7 +214,7 @@ class Rules:
                                     validMoveTuple.append((fromRow-1,fromColumn-1))
                                 if fromColumn!=7 and fromRow!=0 and 'B' in board[fromRow-1][fromColumn+1]:
                                     validMoveTuple.append((fromRow-1,fromColumn+1))
-                                if board[fromRow-1][fromColumn]=='0':
+                                if fromRow!=0 and board[fromRow-1][fromColumn]=='0':
                                     validMoveTuple.append((fromRow-1,fromColumn))
                                     
                 if 'r' in ch:   #For Rook
