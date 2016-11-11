@@ -1,0 +1,6 @@
+{
+  "name": "MyChessAI",
+  "tagline": "AI Project.",
+  "body": "# MyChess AI\r\n\r\nThis is AI chess project. Here, AI gets the valid move by searching up to certain depth and evaluates the board with the help of the evaluation function. It then gets the best move by minimax search( with alpha beta pruning). There is also a random AI.\r\n\r\n## Prerequisites\r\n\r\nTo play chess, you need to have python 2.7 installed on your system. You also need to install pygame library. For installing pygame,refer to:\r\n```\r\nhttp://www.pygame.org/download.shtml\r\n```\r\n\r\n### Getting Started\r\n\r\nTo run the GUI game, type the following command\r\n\r\n```\r\n$ python MainGameGUI.py\r\n```\r\n\r\nFor command line chess, type\r\n\r\n```\r\n$ python MainGame.py\r\n```\r\n\r\n",
+  "note": "Don't delete this file! It's used internally to help with page regeneration."
+}
