@@ -27,7 +27,7 @@ class Evaluation:
             if board[pos[0]][pos[1]]=='Wp':
                 wValue = wValue + 150 + self.getPValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wr':
-                wValue = wValue + 509 + self.getRookValue(board,pos)
+                wValue = wValue + 514 + self.getRookValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wb':
                 wValue = wValue + 442 + self.getBishopValue(board,pos)
             elif board[pos[0]][pos[1]]=='Wh':
@@ -39,7 +39,7 @@ class Evaluation:
                 
         for pos in self.bForce:
             if board[pos[0]][pos[1]]=='Bp':
-                bValue = bValue + 205 + self.getPValue(board,pos)
+                bValue = bValue + 150 + self.getPValue(board,pos)
             elif board[pos[0]][pos[1]]=='Br':
                 bValue = bValue + 514 + self.getRookValue(board,pos)
             elif board[pos[0]][pos[1]]=='Bb':
@@ -58,13 +58,16 @@ class Evaluation:
         pawnValue = 0
         #To promote pawn promotion
         if 'B' in board[r][c]:
-            if r==6:
+            if r==7:
+                pawnValue = pawnValue+595
+            
+            elif r==6:
                 if board[r+1][c]=='0':
-                    pawnValue = pawnValue + 595
+                    pawnValue = pawnValue + 213
                 else:
                     pawnValue = pawnValue + 54
             elif r==5 :
-		if board[r-1][c]=='0' and board[r-2][c]=='0' :
+		if board[r+1][c]=='0' and board[r+2][c]=='0' :
 		    pawnValue = pawnValue + 213
 		else :
 		    pawnValue = pawnValue + 117
@@ -74,17 +77,20 @@ class Evaluation:
                 pass
             #To check for blocked pawn
             if r!=7 and r>0:
-                if board[r-1][c]!='0':
+                if board[r+1][c]!='0':
                     pawnValue = pawnValue - 51
         if 'W' in board[r][c]:
             #To promote pawn promotion
-            if r==1:
+            if r==0:
+                pawnValue=pawnValue+595
+            
+            elif r==1:
                 if board[r-1][c]=='0':
-                    pawnValue = pawnValue + 595
+                    pawnValue = pawnValue + 213
                 else:
                     pawnValue = pawnValue + 54
             elif r==2 :
-		if board[r+1][c]=='0' and board[r+2][c]=='0' :
+		if board[r-1][c]=='0' and board[r-2][c]=='0' :
 		    pawnValue = pawnValue + 213
 		else :
 		    pawnValue = pawnValue + 117
@@ -94,7 +100,7 @@ class Evaluation:
                 pass
             #To check for blocked pawn
             if r!=0 and r<7:
-                if board[r+1][c]!='0':
+                if board[r-1][c]!='0':
                     pawnValue = pawnValue - 51
 
         return pawnValue
@@ -120,7 +126,7 @@ class Evaluation:
             if distance <= 2 :
                     knightValue = knightValue + 98
             elif distance <= 4 :
-                    knightValue = knightValue + 98
+                    knightValue = knightValue + 48
             else :
                 pass
         if 'B' in board[r][c]:
@@ -132,9 +138,9 @@ class Evaluation:
                     knightValue = knightValue + 98
             elif distance <= 4 :
                 if len(self.wForce)==1:
-                    knightValue = knightValue + 267
+                    knightValue = knightValue + 167
                 else:
-                    knightValue = knightValue + 98
+                    knightValue = knightValue + 51
             else :
                 pass
         return knightValue
@@ -169,7 +175,7 @@ class Evaluation:
     def getKingValue (self,board,(r, c)):
 	kingValue = 0
         if r == 7 and (c <= 1 or c >= 6) :
-                kingValue += 50
+                kingValue = kingValue + 50
 	ch=board[r][c][0]
 	#To make the king safe
 	if ch in board[r][c] :

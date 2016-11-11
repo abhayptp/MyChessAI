@@ -81,7 +81,7 @@ class ChessBoard:
             board[toRowPosition][toColumnPosition]='Wq'
             board[fromRowPosition][fromColumnPosition]='0'
         elif board[toRowPosition][toColumnPosition]!='0':
-            #print (self.getName(board[toRowPosition][toColumnPosition])+" is killed")
+            print (self.getName(board[toRowPosition][toColumnPosition])+" is killed")
             board[toRowPosition][toColumnPosition]=board[fromRowPosition][fromColumnPosition]
             board[fromRowPosition][fromColumnPosition]='0'
         else:

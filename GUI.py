@@ -22,13 +22,10 @@ class GUI:
 
     def loadImages(self):
         self.square_size = 50
-        #All image are of 50*50 pixels
-        #convert() is supposed tohelp the pygame display images faster
         self.white_square = pygame.image.load(os.path.join("images","white_square.png")).convert()
         self.brown_square = pygame.image.load(os.path.join("images","Brown.png")).convert()
         self.cyan_square = pygame.image.load(os.path.join("images","cyan_square.png")).convert()
         self.black_pawn = pygame.image.load(os.path.join("images","BlackPawn.png")).convert()
-        #Scaling the images of pieces to 50*50 size
         self.black_pawn = pygame.transform.scale(self.black_pawn, (self.square_size,self.square_size))
         self.black_rook = pygame.image.load(os.path.join("images","BlackRook.png")).convert()
         self.black_rook = pygame.transform.scale(self.black_rook, (self.square_size,self.square_size))

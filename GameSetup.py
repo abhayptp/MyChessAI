@@ -36,6 +36,8 @@ class GameSetup:
 		Radiobutton(self.frame, text="Random AI",variable=self.tk_player2Type,value="randomAI").grid(row=3,column=3)
 		Radiobutton(self.frame, text="Minmax AI",variable=self.tk_player2Type,value="minmaxAI").grid(row=3,column=4)
 		self.tk_player2Type.set("minmaxAI")
+
+		
 		
 
 		b = Button(self.frame, text="Start the Game!", command=self.ok)

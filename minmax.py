@@ -10,11 +10,11 @@ class minmax:
         self.count=0;
 
     #It gets the move by minmax search(with alpha beta pruning)
-    def getMove(self,board,colour):
+    def getMove(self,board,colour,depth):
         if colour=='W':
             d=self.alphabeta(board,colour,1,-999999,999999)
         else:
-            d=self.alphabeta(board,colour,3,-999999,999999)
+            d=self.alphabeta(board,colour,depth,-999999,999999)
         moveTuple=d[1]
         return moveTuple
 

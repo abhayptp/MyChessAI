@@ -17,6 +17,9 @@ class MainGameGUI:
         #To check which player has to move
         self.player=['W','B']
         self.moves=0
+        
+        self.ai2=ChessAI()
+        
         self.pieces=0
         GameParams = GameSetup()
         (player1Name, player1Color, player1Type, player2Name, player2Color, player2Type) = GameParams.getGameInfo()
@@ -30,6 +33,8 @@ class MainGameGUI:
     def mainloop(self,board):
         currentPlayerIndex = 0
         self.pieces=0
+        depth=3
+        draw=0
         #Game will continue until there is a checkmate to black or white.
         while not self.cr.isCheckMate(board,self.player[currentPlayerIndex]):
             currentColor = self.player[currentPlayerIndex]
@@ -45,31 +50,34 @@ class MainGameGUI:
 
             if currentColor=='B':
                 #Getting the best move searched by minmax(with alpha-beta pruning) algo
-                moveTuple = self.ai.getMove(board,'B')
+                moveTuple = self.ai.getMove(board,'B',depth)
                 #As the value is also returned, so taking only d[1]
                 #print "Black"
                 #print(self.ai.count)
                 #self.ai.count=0;
+                if moveTuple==None:
+                    self.ai2.getMove(board,'B')
                 self.moves=self.moves+1
+                if self.moves>100:
+                    draw=1
+                    break
             else:
                 #Else getting the move from player
                 moveTuple = self.gui.getMove(board,'W')
             moveReport = self.cb.makeMove(board,moveTuple)
             currentPlayerIndex = (currentPlayerIndex+1)%2
-            
-        if name=="White":
-            name1="Black"
+        if draw==1:    
+            if name=="White":
+                name1="Black"
+            else:
+                name1="White"
+            #Printing that the player lost(as checkmate has been done)
+            print("%s lost"%name1)
+            #print("Moves= %d"%self.moves)
+            self.gui.draw(board)
+            #Ends the game
         else:
-            name1="White"
-        #Printing that the player lost(as checkmate has been done)
-        print("%s lost"%name1)
-        print("Moves= %d"%self.moves)
-        for i in range(8):
-            for j in range(8):
-                if 'B' in board[i][j]:
-                    self.pieces=self.pieces+1
-        print("Pieces= %d"%self.pieces)
-        self.gui.draw(board)
+            print("Draw")
         #Ends the game
         self.gui.endGame(board)
 board=  [['Br','Bh','Bb','Bq','Ba','Bb','Bh','Br'],
